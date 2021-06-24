@@ -1,0 +1,36 @@
+{
+  "rules": [
+    {
+      "patterns": [
+        "/new$",
+        "/edit$"
+      ],
+      "properties": {
+        "presentation": "modal"
+      }
+    },
+    {
+      "patterns": [
+        "/users/login",
+        "/users/signin",
+        "/users/signup",
+        "/users/sign_in",
+        "/users/sign_up"
+      ],
+      "properties": {
+        "presentation": "modal"
+      }
+    },
+    {
+      "patterns": [
+        "/users/logout",
+        "/users/signout",
+        "/users/sign_out"
+      ],
+      "properties": {
+        "presentation": "replace"
+      }
+    }
+  ]
+}
+
