@@ -1,11 +1,12 @@
 # Turbo-iOS-Base
 ### Turbo-iOS base project that's entirely driven from your backend Rails app.
 
-There were _four primary goals_ for this project:
+There were _five primary goals_ for this project:
 1. reusable base project that can be pointed to any Rails app
 2. app styling, tabs and navbar buttons driven from the server
 3. handle both authenicated and unauthenicated users
-4. no need to write any custom Swift code
+4. all logic and functionality contained in a single Swift file
+5. no need for other developers to write any Swift code
 
 _Disclaimer_: It's been over six years since I've written anything in Objective-C, and I've never written any Swift prior to this project. So the code has lots of room for improvement, refactoring, cleanup, etc.
 
@@ -191,4 +192,4 @@ Now the app tabs and navbar buttons should appear according to the `protected` p
 
 The best part is you shouldn't need to write any Swift code, so you can focus on your backend Rails application. This is something I've dreamt about every since I first started using Rails, and it's now possible thanks to [Turbo-iOS](https://github.com/hotwired/turbo-ios)!
 
-If you find this project useful or have suggestions on improvements, please let me know!
+If you find this project useful or have suggestions on improvements, _please let me know!_
