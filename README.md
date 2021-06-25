@@ -125,7 +125,7 @@ class TurboController < ApplicationController
           {
             "title": "Profile",
             "visit": "/profile",
-            "icon_ios": "building.2",
+            "icon_ios": "person",
             "protected": true
           }
         ],
