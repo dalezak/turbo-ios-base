@@ -1,14 +1,14 @@
 # Turbo-iOS-Base
 ### Turbo-iOS base project that's entirely driven from your backend Rails app.
 
-There were _five primary goals_ for this project:
+There were _five main goals_ for this project:
 1. reusable base project that can be pointed to any Rails app
 2. app styling, tabs and navbar buttons driven from the server
-3. handle both authenicated and unauthenicated users
+3. handle both authenticated and unauthenticated users
 4. all logic and functionality contained in a single Swift file
 5. no need for other developers to write any Swift code
 
-_Disclaimer_: It's been over six years since I've written anything in Objective-C, and I've never written any Swift prior to this project. So the code has lots of room for improvement, refactoring, cleanup, etc.
+_Disclaimer_: It's been over six years since I've written anything in Objective-C, and I've never written any Swift prior to this, so the code has lots of room for improvement, refactoring, cleanup, etc.
 
 If you haven't already, I _highly recommend_ you read the following articles about [Turbo-iOS](https://github.com/hotwired/turbo-ios).
 - [Hybrid iOS apps with Turbo by Joe Masilotti](https://masilotti.com/turbo-ios/hybrid-apps-with-turbo/)
@@ -190,6 +190,6 @@ _That's it!_ Everything should now be configured including the app colors, tabs,
 
 Now the app tabs and navbar buttons should appear according to the `protected` property if the user is authenticated or not. Your navbar buttons can either visit a page or trigger javascript on your server.
 
-The best part is you shouldn't need to write any Swift code, so you can focus on your backend Rails application. This is something I've dreamt about every since I first started using Rails, and it's now possible thanks to [Turbo-iOS](https://github.com/hotwired/turbo-ios)!
+The best part is you shouldn't need to write any Swift code, so you can focus on your backend Rails application. This is something I've dreamt about ever since I first started using Rails, and it's now possible thanks to [Turbo-iOS](https://github.com/hotwired/turbo-ios)!
 
 If you find this project useful or have suggestions on improvements, _please let me know!_
