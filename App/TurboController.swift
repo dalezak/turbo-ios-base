@@ -165,14 +165,7 @@ class TurboController: UINavigationController {
     
     func loadSettings() -> Dictionary<String, AnyObject> {
         let url = turboUrl("/turbo.json")
-        let semaphore = DispatchSemaphore(value: 0)
-        var text: String = ""
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            text = String(data: data!, encoding: String.Encoding.utf8)!
-            semaphore.signal()
-        }
-        task.resume()
-        semaphore.wait()
+        let text: String = URLSession.shared.fetchData(url)
         if let json = stringToDictionary(text: text) {
             return (json["settings"] as? Dictionary<String, AnyObject>)!
         }
@@ -324,6 +317,22 @@ extension TurboController: SessionDelegate {
             self.loadButtons(authenticated == "true")
         })
     }
+}
+
+extension URLSession {
+  func fetchData(_ url: URL) -> String {
+    var text: String = ""
+    let semaphore = DispatchSemaphore(value: 0)
+    let task = self.dataTask(with: url) {(data, response, error) in
+        if (data != nil) {
+            text = String(data: data!, encoding: String.Encoding.utf8)!
+        }
+        semaphore.signal()
+    }
+    task.resume()
+    semaphore.wait()
+    return text;
+  }
 }
 
 extension WKWebView {

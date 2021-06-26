@@ -196,7 +196,7 @@ get 'turbo', to: "turbo#index", as: :turbo
 ```
 
 #### Write Beautiful Ruby
-_That's it!_ Everything should now be configured including the app colors, tabs, navbar buttons, etc which are all driven from the `turbo.json` returned from `turbo_controller.rb`. 
+_And that's it!_ Everything should now be configured including the app colors, tabs, navbar buttons, etc which are all driven from the `turbo.json` returned from `turbo_controller.rb`. 
 
 Now the app tabs and navbar buttons should appear according to the `protected` property if the user is authenticated or not. Your navbar buttons can either visit a page or trigger javascript on your server.
 
