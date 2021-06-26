@@ -34,12 +34,6 @@ git clone https://github.com/dalezak/turbo-ios-base.git
 - change **development** to your local environment
 - change **production** to your production environment
 
-#### Update Info.plist Transport Security
-- open **Info.plist** file
-- add **App Transport Security Settings** dictionary
-- add **Allows Local Networking** boolean
-- set boolean value to **YES**
-
 #### Replace Asset Images
 - visit **https://appicon.co**
 - upload **1024 x 1024** image
