@@ -164,17 +164,16 @@ class TurboController: UINavigationController {
     }
     
     func loadSettings() -> Dictionary<String, AnyObject> {
-        let path = turboPath("/turbo.json")
-        let text = session.webView.evaluate("""
-          var request = new XMLHttpRequest();
-          request.open("GET",'\(path)',false);
-          request.send(null);
-          request.responseText;
-          """)
-        print("path \(path)")
-        print("text \(text)")
+        let url = turboUrl("/turbo.json")
+        let semaphore = DispatchSemaphore(value: 0)
+        var text: String = ""
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            text = String(data: data!, encoding: String.Encoding.utf8)!
+            semaphore.signal()
+        }
+        task.resume()
+        semaphore.wait()
         if let json = stringToDictionary(text: text) {
-            print("json \(json)")
             return (json["settings"] as? Dictionary<String, AnyObject>)!
         }
         return [:]
