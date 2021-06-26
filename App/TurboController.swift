@@ -171,7 +171,10 @@ class TurboController: UINavigationController {
           request.send(null);
           request.responseText;
           """)
+        print("path \(path)")
+        print("text \(text)")
         if let json = stringToDictionary(text: text) {
+            print("json \(json)")
             return (json["settings"] as? Dictionary<String, AnyObject>)!
         }
         return [:]
