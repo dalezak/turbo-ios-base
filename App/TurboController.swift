@@ -250,14 +250,22 @@ class TurboController: UINavigationController {
     
     func showError(title: String, error: Error, image: String = "exclamationmark.triangle") {
         guard let topViewController = self.topViewController else { return }
-
+        topViewController.title = self.appName()
+        if let navbar = pathConfiguration.settings["navbar"] as? Dictionary<String, String> {
+            topViewController.navigationController?.navigationBar.tintColor = UIColor(hexRGB: navbar["foreground"])
+            topViewController.navigationController?.navigationBar.barTintColor = UIColor(hexRGB: navbar["background"])
+            topViewController.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(hexRGB: navbar["foreground"]) as Any]
+        }
         let errorView = ErrorView(title: title, error: error.localizedDescription, image: image)
         let hostingController = UIHostingController(rootView: errorView)
-
         topViewController.addChild(hostingController)
         hostingController.view.frame = topViewController.view.frame
         topViewController.view.addSubview(hostingController.view)
         hostingController.didMove(toParent: topViewController)
+    }
+    
+    func appName() -> String {
+        return Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
     }
 }
 
