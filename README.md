@@ -1,6 +1,8 @@
 # Turbo-iOS-Base
 ### Turbo-iOS base project that's entirely driven from your backend Rails app.
 
+https://dev.to/dalezak/reusable-turbo-ios-project-configured-entirely-from-your-rails-app-3021
+
 There were _five main goals_ for this project:
 1. reusable base project that can be pointed to any Rails app
 2. app styling, tabs and navbar buttons driven from the server
@@ -58,12 +60,12 @@ npm add @hotwired/turbo-rails
 
 #### Import Turbo Javascript
 Add the following code to your **application.js** file.
-```
+```javascript
 import { Turbo } from "@hotwired/turbo-rails";
 window.Turbo = Turbo;
 ```
 Add any custom javascript to **turbo/bridge.js** in your javascript folder.
-```
+```javascript
 export default class Bridge {
   static sayHello() {
     document.body.innerHTML = "<h1>Hello!</h1>"
@@ -71,14 +73,14 @@ export default class Bridge {
 }
 ```
 Then import this in your **application.js** file.
-```
+```javascript
 import Bridge from "../turbo/bridge.js";
 window.bridge = Bridge;
 ```
 
 #### Add Rails Helpers
 In your Rails app, add the following helpers to your `application_helper.rb`
-```
+```ruby
 def turbo?
   request.user_agent.include?("Turbo-")
 end
@@ -94,14 +96,14 @@ end
 
 #### Add Authenticated Header
 Add the following **metatag** to your `<head>` so the app knows if a user is logged in or not.
-```
+```erb
 <meta name="turbo:authenticated" content="<%= user_signed_in? %>">
 ```
 
 #### Hide Page Navigation
 Since Turbo-iOS handles the native navbar, you don't need to show your page navigation anymore. 
 Add `unless turbo?` check around where you usually render your navbar in your Rails app. 
-```
+```erb
 <% unless turbo? %>
   <nav class="d-block">
     <%= render 'partials/navbar' %>
@@ -111,7 +113,7 @@ Add `unless turbo?` check around where you usually render your navbar in your Ra
 
 #### Add Turbo Controller
 Add **turbo_controller.rb** which will return `turbo.json` used for rules and settings, here's a sample to get you started.
-```
+```ruby
 class TurboController < ApplicationController
   def index
     render json: {
@@ -191,7 +193,7 @@ To see all the available iOS icons you can use for navbar buttons or tabbar icon
 
 #### Add Turbo Route
 In your **routes.rb** add route pointing to `turbo#index`.
-```
+```ruby
 get 'turbo', to: "turbo#index", as: :turbo
 ```
 
