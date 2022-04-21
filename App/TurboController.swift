@@ -207,13 +207,13 @@ class TurboController: UINavigationController {
     }
     
     func isReplace(_ properties: PathProperties) -> Bool {
-        let presentation = properties["presentation"] as? String
-        return presentation == "replace"
+        let action = properties["action"] as? String
+        return action == "replace"
     }
     
     func isRestore(_ properties: PathProperties) -> Bool {
-        let presentation = properties["presentation"] as? String
-        return presentation == "restore"
+        let action = properties["action"] as? String
+        return action == "restore"
     }
     
     func pathProperties(_ url: URL) -> PathProperties {
