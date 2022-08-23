@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/hotwired/turbo-ios",
         "state": {
           "branch": null,
-          "revision": "325c8c779693a9404047a6dce9fb9ff3fe0111e9",
-          "version": "7.0.0-beta.1"
+          "revision": "2ace9ebe01fe3bce3e7e8df38cb82df052493663",
+          "version": "7.0.0-rc.7"
         }
       }
     ]

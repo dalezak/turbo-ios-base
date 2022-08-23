@@ -11,7 +11,7 @@ class TurboController: UINavigationController {
     private lazy var modalSession = makeSession()
     private lazy var settings = loadSettings()
     private lazy var processPool = WKProcessPool()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loadNavBar()
@@ -19,12 +19,12 @@ class TurboController: UINavigationController {
         loadTabs()
         loadHome()
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tabBar.invalidateIntrinsicContentSize()
     }
-    
+
     func visit(url: URL, action: VisitAction = .advance, properties: PathProperties = [:]) {
         if (presentedViewController != nil) {
             dismiss(animated: true)
@@ -59,13 +59,13 @@ class TurboController: UINavigationController {
             session.visit(viewController)
         }
     }
-    
+
     func loadHome() {
         let url = turboUrl()
         let properties = pathProperties(url)
         visit(url: url, action: .replace, properties: properties)
     }
-    
+
     func loadNavBar() {
         if let navbar = settings["navbar"] as? Dictionary<String, String> {
             navigationBar.tintColor = UIColor(hexRGB: navbar["foreground"])
@@ -73,7 +73,7 @@ class TurboController: UINavigationController {
             navigationBar.titleTextAttributes = [.foregroundColor: UIColor(hexRGB: navbar["foreground"]) as Any]
         }
     }
-    
+
     func loadTabBar() {
         if let tabbar = settings["tabbar"] as? Dictionary<String, String> {
             UITabBar.appearance().barTintColor = UIColor(hexRGB: tabbar["background"])
@@ -81,7 +81,7 @@ class TurboController: UINavigationController {
             UITabBar.appearance().unselectedItemTintColor = UIColor(hexRGB: tabbar["unselected"])
         }
     }
-    
+
     func loadTabs(_ authenticated: Bool = false) {
         tabBar.items?.removeAll()
         if let tabs = settings["tabs"] as? [Dictionary<String, AnyObject>] {
@@ -109,7 +109,7 @@ class TurboController: UINavigationController {
             tabBar.layer.zPosition = -1
         }
     }
-    
+
     func loadButtons(_ authenticated: Bool = false) {
         if let buttons = settings["buttons"] as? [Dictionary<String, AnyObject>] {
             let viewController = session.topmostVisitable!.visitableViewController
@@ -151,7 +151,7 @@ class TurboController: UINavigationController {
             viewController.navigationItem.rightBarButtonItems = rightBarButtonItems
         }
     }
-    
+
     func loadButton(title: String?, icon: String?) -> UIBarButtonItem? {
         if (title != nil) {
             return UIBarButtonItem(title: title!, style: .plain, target: nil, action: nil)
@@ -162,7 +162,7 @@ class TurboController: UINavigationController {
         }
         return nil;
     }
-    
+
     func loadSettings() -> Dictionary<String, AnyObject> {
         let url = turboUrl("/turbo.json")
         let text: String = URLSession.shared.fetchData(url)
@@ -171,7 +171,7 @@ class TurboController: UINavigationController {
         }
         return [:]
     }
-    
+
     func makeTabBar() -> UITabBar {
         let tabBar = UITabBar()
         tabBar.delegate = self
@@ -184,7 +184,7 @@ class TurboController: UINavigationController {
         tabBar.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         return tabBar
     }
-    
+
     func makeSession() -> Session {
         let configuration = WKWebViewConfiguration()
         configuration.processPool = processPool
@@ -195,41 +195,41 @@ class TurboController: UINavigationController {
         session.pathConfiguration = pathConfiguration
         return session
     }
-    
+
     private lazy var pathConfiguration = PathConfiguration(sources: [
         .server(turboUrl("/turbo.json")),
         .file(Bundle.main.url(forResource: "Turbo", withExtension: "json")!)
     ])
-    
+
     func isModal(_ properties: PathProperties) -> Bool {
         let presentation = properties["presentation"] as? String
         return presentation == "modal"
     }
-    
+
     func isReplace(_ properties: PathProperties) -> Bool {
         let presentation = properties["presentation"] as? String
         return presentation == "replace"
     }
-    
+
     func isRestore(_ properties: PathProperties) -> Bool {
         let presentation = properties["presentation"] as? String
         return presentation == "restore"
     }
-    
+
     func pathProperties(_ url: URL) -> PathProperties {
         return pathConfiguration.properties(for: url)
     }
-    
+
     func turboPath(_ path: String? = "") -> String {
         let environment = ProcessInfo.processInfo.environment["ENVIRONMENT"]! as String
         let backendURL = Bundle.main.infoDictionary?["TURBO_URL" as String] as! Dictionary<String, String>
         return backendURL[environment]! + path!;
     }
-    
+
     func turboUrl(_ path: String? = "") -> URL {
         return URL(string: turboPath(path))!
     }
-    
+
     func stringToDictionary(text: String) -> [String: Any]? {
         if let data = text.data(using: .utf8) {
             do {
@@ -241,13 +241,13 @@ class TurboController: UINavigationController {
         }
         return nil
     }
-    
+
     func showAlert(title: String, error: Error) {
         let alert = UIAlertController(title: title, message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
-    
+
     func showError(title: String, error: Error, image: String = "exclamationmark.triangle") {
         guard let topViewController = self.topViewController else { return }
         topViewController.title = self.appName()
@@ -263,7 +263,7 @@ class TurboController: UINavigationController {
         topViewController.view.addSubview(hostingController.view)
         hostingController.didMove(toParent: topViewController)
     }
-    
+
     func appName() -> String {
         return Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
     }
@@ -284,12 +284,12 @@ extension TurboController: SessionDelegate {
     func session(_ session: Session, didProposeVisit proposal: VisitProposal) {
         visit(url: proposal.url, action: proposal.options.action, properties: proposal.properties)
     }
-    
+
     func session(_ session: Session, openExternalURL url: URL) {
         let safariViewController = SFSafariViewController(url: url)
         present(safariViewController, animated: true, completion: nil)
     }
-    
+
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, error: Error) {
         if let turboError = error as? TurboError {
             switch turboError {
@@ -316,7 +316,7 @@ extension TurboController: SessionDelegate {
             showError(title: "Problem Loading Page", error: error, image: "exclamationmark.triangle")
         }
     }
-    
+
     func sessionDidFinishRequest(_ session: Session) {
         let script = "document.querySelector(\"meta[name='turbo:authenticated']\").content"
         session.webView.evaluateJavaScript(script, completionHandler: { (html: Any?, error: Error?) in
@@ -324,6 +324,11 @@ extension TurboController: SessionDelegate {
             self.loadTabs(authenticated == "true")
             self.loadButtons(authenticated == "true")
         })
+    }
+
+    // added to turbo-ios in 7.0.0-rc.6
+    func sessionWebViewProcessDidTerminate(_ session: Session) {
+        // TODO
     }
 }
 
@@ -388,7 +393,7 @@ extension UIColor {
         }
         self.init(red: CGFloat((val >> 24) & 0xff) / 255.0, green: CGFloat((val >> 16) & 0xff) / 255.0, blue: CGFloat((val >> 8) & 0xff) / 255.0, alpha: CGFloat(val & 0xff) / 255.0)
     }
-    
+
     convenience init?(hexRGB: String?) {
         guard let rgb = hexRGB else {
             return nil
