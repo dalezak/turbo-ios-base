@@ -368,7 +368,7 @@
 			repositoryURL = "https://github.com/hotwired/turbo-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "7.0.0-beta.1";
+				minimumVersion = "7.0.0-rc.7";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
